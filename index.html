@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ModulateDemodulate by Jared Scarito</title>
     <link rel="stylesheet" href="css/webReset.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -10,32 +11,37 @@
 <div id='inputs-box'>
     <h3>Text to ASCII</h3>
     <input type="text" id="text-input" />
-    <input type="text" id="text-ascii" />
+    <textarea type="text" id="text-ascii" disabled></textarea>
     <button onclick="runJS();">
         Transform
     </button>
     <h3>Text to Binary (ASCII)</h3>
     <input type="text" id="text-input2" />
-    <input type="text" id="text-binary" />
+    <textarea type="text" id="text-binary" disabled></textarea>
     <button onclick="textToBinary();">
         Transform
     </button>
     <h3>Text to Voltages (Modulation)</h3>
     <input type="text" id="text-input3" />
-    <input type="text" id="text-voltage" />
+    <textarea type="text" id="text-voltage" disabled></textarea>
     <button onclick="textToVoltages();">
         Transform
     </button>
     <h3>Voltages to Text (Demodulation)</h3>
     <input type="text" id="text-input4" />
-    <input type="text" id="voltage-text" />
+    <textarea type="text" id="voltage-text" disabled></textarea>
     <button onclick="voltageToText();">
         Transform
     </button>
 </div>
+<div id='charts-box'>
+    <h3>NRZI Plotted:</h3>
+    <canvas id="NRZI-graph" width="1200px" height="100%"></canvas>
+</div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
