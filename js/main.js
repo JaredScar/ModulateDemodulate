@@ -67,6 +67,35 @@ function textToVoltages() {
 function voltageToText() {
     var textt = $('#text-input4').val();
     var volts = JSON.parse(textt);
+    console.log(volts);
+    var binary = "";
+    for (var byteInd in volts) {
+        var byte = volts[byteInd];
+        var str = "";
+        for (var bit in byte) {
+            if (parseFloat(byte[bit]) > .2) {
+                // It's a 0
+                //console.log("It's a 0")
+                str += "1";
+            } else {
+                // It's a 1
+                //console.log("It's a 1")
+                str += "0";
+            }
+        }
+        binary += str + " ";
+    }
+    var string = "";
+    for (var byte8 in binary.split(" ")) {
+        var num = bin_to_dec(binary.split(" ")[byte8]);
+        var letter = String.fromCharCode(parseInt(num));
+        string += letter;
+    }
+    $('#voltage-text').val(string);
+}
+function bin_to_dec(bstr) {
+    return parseInt((bstr + '')
+        .replace(/[^01]/gi, ''), 2);
 }
 function graphNRZICustom() {
     var canvas = document.getElementById('NRZI-graph-custom');

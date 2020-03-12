@@ -7,6 +7,14 @@ body {
 #charts-box {
     overflow-x: scroll;
 }
+textarea, input {
+    height: 20px;
+    width: 400px;
+    vertical-align: bottom;
+}
+textarea {
+    height: 50px;
+}
 @media only screen and (min-width: 667px) {
     /* For iPhone 6+++ landscape mode: */
 }
