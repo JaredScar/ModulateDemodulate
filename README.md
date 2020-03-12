@@ -15,13 +15,3 @@ The NRZI encoding scheme uses a voltage change in between a clock cycle to deter
 a 1 and 0 between data. For instance, within one clock pulse, the voltage may change to 2 from a
 5, this would indicate a 1 as the voltage changed. If the voltage stayed at what it was the last
 clock cycle, then this is a 0.
-#### Manchester
-The Manchester encoding works similar to the NRZI encoding in regards to having transitions in the 
-middle of a clock cycle, but the Manchester encoding provides at least one transition per bit. NRZI
-only uses a transition in the middle of the clock cycle when there is a 1 value. The Manchester
-encoding makes clock recovery easier.
-#### NRZ
-Now, technically there are two encoding for NRZ. That being NRZ unipolar and NRZ bipolar. We will
-be focusing on the former of the two, NRZ unipolar in which changes voltages at the start of a 
-clock cycle to indicate a 1 or 0. A 1 is indicated with a high voltage, whilst a 0 is indicated by
-a low voltage.

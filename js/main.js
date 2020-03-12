@@ -60,16 +60,17 @@ function textToVoltages() {
             voltages.push(voltArr);
         }
     }
-    //graphNRZI();
+    graphNRZI();
     graphNRZICustom();
     $('#text-voltage').val(JSON.stringify(voltages));
 }
 function voltageToText() {
     var textt = $('#text-input4').val();
+    var volts = JSON.parse(textt);
 }
 function graphNRZICustom() {
-    var canvas = document.getElementById('NRZI-graph');
-    var ctx = document.getElementById('NRZI-graph').getContext('2d');
+    var canvas = document.getElementById('NRZI-graph-custom');
+    var ctx = document.getElementById('NRZI-graph-custom').getContext('2d');
     var clockSpacing = canvas.width / voltagesGlobal_NRZI.length;
     var count = 0;
     for (var voltInd in voltagesGlobal_NRZI) {

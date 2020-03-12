@@ -4,6 +4,9 @@
 body {
     background-color: #ECECEC;
 }
+#charts-box {
+    overflow-x: scroll;
+}
 @media only screen and (min-width: 667px) {
     /* For iPhone 6+++ landscape mode: */
 }
