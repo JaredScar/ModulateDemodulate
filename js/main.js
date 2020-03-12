@@ -97,18 +97,6 @@ function bin_to_dec(bstr) {
     return parseInt((bstr + '')
         .replace(/[^01]/gi, ''), 2);
 }
-function graphNRZICustom() {
-    var canvas = document.getElementById('NRZI-graph-custom');
-    var ctx = document.getElementById('NRZI-graph-custom').getContext('2d');
-    var clockSpacing = canvas.width / voltagesGlobal_NRZI.length;
-    var count = 0;
-    for (var voltInd in voltagesGlobal_NRZI) {
-        ctx.moveTo(count + clockSpacing, 0);
-        ctx.lineTo(count + clockSpacing, canvas.height);
-        ctx.stroke();
-        count = count + clockSpacing + clockSpacing;
-    }
-}
 function graphNRZI() {
     var ctx = document.getElementById('NRZI-graph').getContext('2d');
     var labels_data = [];

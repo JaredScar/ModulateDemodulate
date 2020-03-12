@@ -14,6 +14,8 @@ textarea, input {
 }
 textarea {
     height: 50px;
+    background-color: white;
+    color: black;
 }
 @media only screen and (min-width: 667px) {
     /* For iPhone 6+++ landscape mode: */
