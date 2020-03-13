@@ -61,7 +61,7 @@ function textToVoltages() {
         }
     }
     graphNRZI();
-    graphNRZICustom();
+    //graphNRZICustom();
     $('#text-voltage').val(JSON.stringify(voltages));
 }
 function voltageToText() {
