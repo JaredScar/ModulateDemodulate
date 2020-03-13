@@ -102,7 +102,7 @@ function graphNRZI() {
     var labels_data = [];
     for (var i = 0; i < voltagesGlobal_NRZI.length; i++) {
         var volt = voltagesGlobal_NRZI[i];
-        labels_data.push("Clock Pulse");
+        labels_data.push("Middle of Clock Pulse");
     }
     var myChart = new Chart(ctx, {
         type: 'line',
