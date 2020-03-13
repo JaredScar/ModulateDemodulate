@@ -1,3 +1,7 @@
+/**
+ * runJS() function:
+ *     Changes text into ASCII code values (base 10)
+ */
 function runJS() {
     var textt = $('#text-input').val();
     var values = "";
@@ -7,6 +11,10 @@ function runJS() {
     $('#text-ascii').val(values);
 }
 
+/**
+ * textToBinary() function:
+ *     Changes text provided into ASCII code values, then their base-10 values into base-2 (binary)
+ */
 function textToBinary() {
     var textt = $('#text-input2').val();
     var values = [];
@@ -24,7 +32,16 @@ function textToBinary() {
     }
     $('#text-binary').val(value);
 }
+// Global voltage array to be used with charts.js:
 var voltagesGlobal_NRZI = [];
+
+/**
+ * textToVoltages() function:
+ *     Changes text into ASCII code values, then their base-10 values into base-2 (binary),
+ *     then into voltage levels based on the value of 1s and 0s between the bits.
+ *     1 = .50
+ *     0 = .20
+ */
 function textToVoltages() {
     var textt = $('#text-input3').val();
     var values = [];
@@ -64,6 +81,11 @@ function textToVoltages() {
     //graphNRZICustom();
     $('#text-voltage').val(JSON.stringify(voltages));
 }
+
+/**
+ * voltageToText() function:
+ *    Changes voltages back into text via demodulation, basically just does our modulation in reverse...
+ */
 function voltageToText() {
     var textt = $('#text-input4').val();
     var volts = JSON.parse(textt);
@@ -93,10 +115,21 @@ function voltageToText() {
     }
     $('#voltage-text').val(string);
 }
+
+/**
+ * Binary to Decimal function:
+ * @param bstr
+ * @returns {number}
+ */
 function bin_to_dec(bstr) {
     return parseInt((bstr + '')
         .replace(/[^01]/gi, ''), 2);
 }
+
+/**
+ * graphNRZI() function:
+ *     Uses charts.js to graph the voltage values on a chart in a form of a waveform
+ */
 function graphNRZI() {
     var ctx = document.getElementById('NRZI-graph').getContext('2d');
     var labels_data = [];
