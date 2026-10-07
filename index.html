@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Modulate text into an NRZI voltage waveform and demodulate that waveform back into text.">
+    <meta name="description" content="Modulate text into NRZ, RZ, Manchester, and NRZI voltage waveforms, then demodulate a trace back into text.">
     <meta name="theme-color" content="#121612">
     <title>Modulate Demodulate</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121612'/%3E%3Cpath d='M3 22h5l3-12 4 12h3l3-8 3 8h5' fill='none' stroke='%239dff6a' stroke-width='2' stroke-linejoin='miter'/%3E%3C/svg%3E">
@@ -14,7 +14,7 @@
         <header class="site-header">
             <p class="eyebrow">Line coding</p>
             <h1>Modulate Demodulate</h1>
-            <p class="lede">Type a message and watch it become bytes, bits, and an NRZI voltage waveform. Paste those voltages back in to recover the message.</p>
+            <p class="lede">Type a message and compare how NRZ, RZ, Manchester, and NRZI turn those bits into a voltage waveform. Paste a trace back in to recover the message.</p>
             <noscript>
                 <p class="lede">JavaScript is required to encode and decode the waveform.</p>
             </noscript>
@@ -23,6 +23,10 @@
         <div class="layout">
             <section id="modulate" aria-labelledby="modulate-title">
                 <h2 id="modulate-title">Modulate</h2>
+                <fieldset class="schemes">
+                    <legend id="scheme-legend">Encoding scheme</legend>
+                    <div class="scheme-options" id="scheme-options"></div>
+                </fieldset>
                 <label for="message">Message</label>
                 <input id="message" type="text" value="Hello" autocomplete="off" autocapitalize="off" spellcheck="false">
 
@@ -47,18 +51,14 @@
                 </div>
 
                 <details>
-                    <summary>How NRZI works</summary>
-                    <p>The message is turned into UTF-8 bytes, then into 8-bit groups. ASCII text is one byte per character. The line idles at 0.20. A <strong>1</strong> flips the line between 0.20 and 0.50. A <strong>0</strong> leaves it where it was. Demodulation reads that backwards: a change is a 1, a hold is a 0.</p>
+                    <summary id="scheme-summary">How this scheme works</summary>
+                    <p id="scheme-detail"></p>
                 </details>
             </section>
 
             <section id="wave" class="wave-card" aria-labelledby="wave-title">
-                <h2 id="wave-title">NRZI waveform</h2>
-                <p class="scope-bar">
-                    <span>Starts at 0.20</span>
-                    <span>1 flips</span>
-                    <span>0 holds</span>
-                    <span>Amber marks byte boundaries</span>
+                <h2 id="wave-title">Waveform</h2>
+                <p class="scope-bar" id="scope-hints">
                     <span id="scroll-hint" hidden>Scroll sideways for the rest</span>
                 </p>
                 <div class="scope-viewport" id="waveform-viewport">
@@ -69,7 +69,7 @@
             <section id="demodulate" aria-labelledby="demodulate-title">
                 <h2 id="demodulate-title">Demodulate</h2>
                 <label for="voltages-in">Voltages</label>
-                <textarea id="voltages-in" spellcheck="false" autocapitalize="off" placeholder="[[0.2,0.5,0.5,0.5,0.5,0.5,0.5,0.2]]"></textarea>
+                <textarea id="voltages-in" spellcheck="false" autocapitalize="off" placeholder="Paste voltages for the selected scheme"></textarea>
                 <div aria-live="polite">
                     <div class="field-head">
                         <p class="label" id="decoded-label">Recovered message</p>
@@ -82,7 +82,7 @@
         </div>
 
         <footer class="site-footer">
-            <p>Modulate Demodulate by Jared Scarito. A demonstration of NRZI line coding.</p>
+            <p>Modulate Demodulate by Jared Scarito. A demonstration of NRZ, RZ, Manchester, and NRZI line coding.</p>
         </footer>
     </div>
     <script src="js/main.js" defer></script>
