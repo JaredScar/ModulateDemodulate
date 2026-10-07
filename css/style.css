@@ -1,37 +1,321 @@
-/* For mobile devices: */
-/* ------------------- */
-/* */
+:root {
+    color-scheme: dark;
+    --bg: #121612;
+    --raised: #1b2219;
+    --ink: #070a06;
+    --line: #31402c;
+    --text: #e7f0df;
+    --muted: #a3b39a;
+    --phosphor: #9dff6a;
+    --amber: #f0c14a;
+    --danger: #ffb4a8;
+    --sans: "Segoe UI", system-ui, sans-serif;
+    --mono: "Cascadia Mono", ui-monospace, Consolas, monospace;
+    --card-pad: 1.15rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--bg);
+}
+
 body {
-    background-color: #ECECEC;
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(900px 420px at 0% -10%, rgba(157, 255, 106, 0.08), transparent 55%),
+        var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.5;
 }
-#charts-box {
-    overflow-x: scroll;
+
+:focus-visible {
+    outline: 2px solid var(--phosphor);
+    outline-offset: 2px;
 }
-textarea, input {
-    height: 20px;
-    width: 400px;
-    vertical-align: bottom;
+
+::selection {
+    background: #2f6a22;
+    color: #f3ffe9;
 }
+
+.wrap {
+    width: min(1120px, calc(100% - 1.5rem));
+    margin-inline: auto;
+    padding-block: 2.25rem 3rem;
+}
+
+.site-header {
+    margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+    margin: 0;
+    color: var(--phosphor);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0.2rem 0 0.55rem;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+}
+
+h2 {
+    margin: 0 0 0.85rem;
+    font-size: 1.15rem;
+    font-weight: 650;
+}
+
+.lede {
+    max-width: 42rem;
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 1.05rem;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+}
+
+section {
+    min-width: 0;
+    padding: 1.1rem var(--card-pad) 1.15rem;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+}
+
+label,
+.label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.92rem;
+    font-weight: 650;
+}
+
+.label {
+    margin-bottom: 0;
+}
+
+input,
 textarea {
-    height: 50px;
-    background-color: white;
-    color: black;
+    width: 100%;
+    margin: 0 0 0.95rem;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--text);
+    font: 1rem/1.45 var(--mono);
 }
-@media only screen and (min-width: 667px) {
-    /* For iPhone 6+++ landscape mode: */
+
+textarea {
+    min-height: 11.5rem;
+    resize: vertical;
 }
-@media only screen and (min-width: 768px) {
-    /* For tablets: */
+
+.readouts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+    margin: 0;
 }
-@media only screen and (min-width: 1024px) {
-    /* iPad Pros:  */
+
+.readouts dt {
+    margin-bottom: 0.3rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
-@media only screen and (min-width: 1366px) {
-    /* Desktop screens and iPad pro sideways: */
+
+.readouts > div,
+.readouts dd {
+    min-width: 0;
 }
-@media only screen and (min-width: 1500px) {
-    /* Desktop screens 1500px - 1740px : */
+
+.readouts dd {
+    margin: 0;
+    padding: 0.65rem 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    line-height: 1.45;
 }
-@media only screen and (min-width: 1740px) {
-    /* Desktop screens: */
+
+pre {
+    margin: 0;
+    font: inherit;
+    white-space: pre-wrap;
+}
+
+.actions,
+.field-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.actions {
+    margin-top: 0.95rem;
+}
+
+.field-head {
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+button {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--phosphor);
+    color: #13210d;
+    cursor: pointer;
+    font: 600 0.92rem/1 var(--sans);
+    padding: 0.62rem 0.9rem;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(1.06);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+button.ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+}
+
+details {
+    margin-top: 1rem;
+    color: var(--muted);
+}
+
+summary {
+    width: fit-content;
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 650;
+}
+
+details p {
+    margin: 0.55rem 0 0;
+}
+
+details strong {
+    color: var(--phosphor);
+    font-weight: 700;
+}
+
+.wave-card {
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
+.scope-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    margin: 0 0 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+}
+
+.scope-viewport {
+    margin-inline: calc(var(--card-pad) * -1);
+    overflow-x: auto;
+    scrollbar-gutter: stable;
+    background: var(--ink);
+    border-top: 1px solid var(--line);
+}
+
+.scope-viewport::-webkit-scrollbar {
+    height: 10px;
+}
+
+.scope-viewport::-webkit-scrollbar-thumb {
+    background: #31402c;
+    border-radius: 999px;
+}
+
+canvas {
+    display: block;
+}
+
+.recovered {
+    min-height: 2.8rem;
+    margin: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--ink);
+    font-family: var(--mono);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.recovered.hint {
+    color: var(--muted);
+}
+
+.error {
+    min-height: 1.3rem;
+    margin: 0.5rem 0 0;
+    color: var(--danger);
+}
+
+.site-footer {
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+@media (min-width: 720px) {
+    .wrap {
+        width: min(1120px, calc(100% - 3rem));
+    }
+}
+
+@media (min-width: 960px) {
+    .layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-areas:
+            "modulate demodulate"
+            "wave wave";
+        align-items: start;
+    }
+
+    #modulate { grid-area: modulate; }
+    #demodulate { grid-area: demodulate; }
+    #wave { grid-area: wave; }
 }

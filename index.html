@@ -3,45 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ModulateDemodulate by Jared Scarito</title>
-    <link rel="stylesheet" href="css/webReset.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <meta name="description" content="Modulate text into an NRZI voltage waveform and demodulate that waveform back into text.">
+    <meta name="theme-color" content="#121612">
+    <title>Modulate Demodulate</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121612'/%3E%3Cpath d='M3 22h5l3-12 4 12h3l3-8 3 8h5' fill='none' stroke='%239dff6a' stroke-width='2' stroke-linejoin='miter'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id='inputs-box'>
-    <h3>Text to ASCII</h3>
-    <input type="text" id="text-input" />
-    <textarea type="text" id="text-ascii"></textarea>
-    <button onclick="runJS();">
-        Transform
-    </button>
-    <h3>Text to Binary (ASCII)</h3>
-    <input type="text" id="text-input2" />
-    <textarea type="text" id="text-binary"></textarea>
-    <button onclick="textToBinary();">
-        Transform
-    </button>
-    <h3>Text to Voltages (Modulation)</h3>
-    <input type="text" id="text-input3" />
-    <textarea type="text" id="text-voltage"></textarea>
-    <button onclick="textToVoltages();">
-        Transform
-    </button>
-    <h3>Voltages to Text (Demodulation)</h3>
-    <input type="text" id="text-input4" />
-    <textarea type="text" id="voltage-text"></textarea>
-    <button onclick="voltageToText();">
-        Transform
-    </button>
-</div>
-<div id='charts-box'>
-    <h3>NRZI Electric Waveform:</h3>
-    <canvas id="NRZI-graph" width="1000px" height="200px"></canvas>
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-<script src="js/main.js"></script>
+    <div class="wrap">
+        <header class="site-header">
+            <p class="eyebrow">Line coding</p>
+            <h1>Modulate Demodulate</h1>
+            <p class="lede">Type a message and watch it become bytes, bits, and an NRZI voltage waveform. Paste those voltages back in to recover the message.</p>
+            <noscript>
+                <p class="lede">JavaScript is required to encode and decode the waveform.</p>
+            </noscript>
+        </header>
+
+        <div class="layout">
+            <section id="modulate" aria-labelledby="modulate-title">
+                <h2 id="modulate-title">Modulate</h2>
+                <label for="message">Message</label>
+                <input id="message" type="text" value="Hello" autocomplete="off" autocapitalize="off" spellcheck="false">
+
+                <dl class="readouts">
+                    <div>
+                        <dt id="bytes-label">ASCII</dt>
+                        <dd><pre id="bytes-out"></pre></dd>
+                    </div>
+                    <div>
+                        <dt>Binary</dt>
+                        <dd><pre id="binary-out"></pre></dd>
+                    </div>
+                    <div>
+                        <dt>Voltages</dt>
+                        <dd><pre id="voltage-out"></pre></dd>
+                    </div>
+                </dl>
+
+                <div class="actions">
+                    <button type="button" id="send-to-decode">Demodulate this trace</button>
+                    <button type="button" class="ghost" id="copy-voltages">Copy voltages</button>
+                </div>
+
+                <details>
+                    <summary>How NRZI works</summary>
+                    <p>The message is turned into UTF-8 bytes, then into 8-bit groups. ASCII text is one byte per character. The line idles at 0.20. A <strong>1</strong> flips the line between 0.20 and 0.50. A <strong>0</strong> leaves it where it was. Demodulation reads that backwards: a change is a 1, a hold is a 0.</p>
+                </details>
+            </section>
+
+            <section id="wave" class="wave-card" aria-labelledby="wave-title">
+                <h2 id="wave-title">NRZI waveform</h2>
+                <p class="scope-bar">
+                    <span>Starts at 0.20</span>
+                    <span>1 flips</span>
+                    <span>0 holds</span>
+                    <span>Amber marks byte boundaries</span>
+                    <span id="scroll-hint" hidden>Scroll sideways for the rest</span>
+                </p>
+                <div class="scope-viewport" id="waveform-viewport">
+                    <canvas id="waveform" width="640" height="220">The voltage list beside this graph describes the same waveform.</canvas>
+                </div>
+            </section>
+
+            <section id="demodulate" aria-labelledby="demodulate-title">
+                <h2 id="demodulate-title">Demodulate</h2>
+                <label for="voltages-in">Voltages</label>
+                <textarea id="voltages-in" spellcheck="false" autocapitalize="off" placeholder="[[0.2,0.5,0.5,0.5,0.5,0.5,0.5,0.2]]"></textarea>
+                <div aria-live="polite">
+                    <div class="field-head">
+                        <p class="label" id="decoded-label">Recovered message</p>
+                        <button type="button" class="ghost" id="copy-decoded" disabled>Copy message</button>
+                    </div>
+                    <p id="decoded-out" class="recovered hint" aria-labelledby="decoded-label">Paste a voltage trace to recover the message.</p>
+                    <p id="decode-error" class="error"></p>
+                </div>
+            </section>
+        </div>
+
+        <footer class="site-footer">
+            <p>Modulate Demodulate by Jared Scarito. A demonstration of NRZI line coding.</p>
+        </footer>
+    </div>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
